@@ -1,0 +1,81 @@
+apiVersion: eksctl.io/v1alpha5
+kind: ClusterConfig
+
+metadata:
+  name: Sri-EKS
+  region: us-west-2
+  version: "1.21"
+
+# cloudWatch:
+#   clusterLogging:
+#     enableTypes: ["*"]
+
+vpc:
+  clusterEndpoints:
+    publicAccess: true # True if you want to enable
+    privateAccess: false
+  subnets:
+    public:
+      us-west-2b: { id: subnet-0b82c8786a39a7b27 }
+      us-west-2a: { id: subnet-0bd360201cbb95403 }
+
+managedNodeGroups:
+  # - name: sri-ng1
+  #   labels: { role: workers }
+  #   instanceType: t3.micro
+  #   #privateNetworking: true
+  #   desiredCapacity: 2
+  #   minSize: 2
+  #   maxSize: 2
+  #   volumeSize: 10
+  #   ssh:
+  #     allow: true # will use ~/.ssh/id_rsa.pub as the default ssh key
+  #     publicKeyPath: /home/raja/localpc/aws/eks.pub
+  #   iam:
+  #     attachPolicyARNs:
+  #       - arn:aws:iam::aws:policy/AmazonEKSWorkerNodePolicy
+  #       - arn:aws:iam::aws:policy/AmazonEKS_CNI_Policy
+  #       - arn:aws:iam::aws:policy/AmazonEC2ContainerRegistryReadOnly
+  #       - arn:aws:iam::aws:policy/ElasticLoadBalancingFullAccess
+  #     withAddonPolicies:
+  #       autoScaler: true
+  - name: sri-ng2
+    labels: { role: workers }
+    instanceType: t3.micro
+    #privateNetworking: true
+    desiredCapacity: 2
+    minSize: 2
+    maxSize: 2
+    volumeSize: 10
+    ssh:
+      allow: true # will use ~/.ssh/id_rsa.pub as the default ssh key
+      publicKeyPath: /home/raja/localpc/aws/eks.pub
+    iam:
+      attachPolicyARNs:
+        - arn:aws:iam::aws:policy/AmazonEKSWorkerNodePolicy
+        - arn:aws:iam::aws:policy/AmazonEKS_CNI_Policy
+        - arn:aws:iam::aws:policy/AmazonEC2ContainerRegistryReadOnly
+        - arn:aws:iam::aws:policy/ElasticLoadBalancingFullAccess
+      withAddonPolicies:
+        autoScaler: true
+    maxPodsPerNode: 80
+  - name: sri-ng3
+    labels: { role: workers }
+    instanceType: t3.micro
+    #privateNetworking: true
+    desiredCapacity: 2
+    minSize: 2
+    maxSize: 2
+    volumeSize: 10
+    ssh:
+      allow: true # will use ~/.ssh/id_rsa.pub as the default ssh key
+      publicKeyPath: /home/raja/localpc/aws/eks.pub
+    iam:
+      attachPolicyARNs:
+        - arn:aws:iam::aws:policy/AmazonEKSWorkerNodePolicy
+        - arn:aws:iam::aws:policy/AmazonEKS_CNI_Policy
+        - arn:aws:iam::aws:policy/AmazonEC2ContainerRegistryReadOnly
+        - arn:aws:iam::aws:policy/ElasticLoadBalancingFullAccess
+      withAddonPolicies:
+        autoScaler: true
+    maxPodsPerNode: 80

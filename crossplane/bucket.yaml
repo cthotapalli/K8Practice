@@ -1,0 +1,25 @@
+apiVersion: tf.crossplane.io/v1alpha1
+kind: Workspace
+metadata:
+  name: example-inline
+  annotations:
+    # The terraform workspace will be named 'coolbucket'. If you omit this
+    # annotation it would be derived from metadata.name - e.g. 'example-inline'.
+    crossplane.io/external-name: coolbucket
+spec:
+  forProvider:
+    # Workspaces default to using a remote source - like workspace-remote.yaml.
+    # For simple cases you can use an inline source to specify the content of
+    # main.tf as opaque, inline HCL.
+    source: Inline
+    module: |
+      // Outputs are written to the connection secret.
+      resource "aws_s3_bucket" "b" {
+        bucket = "my-tf-test-bucket-raja-sri-123"
+        acl    = "private"
+
+        tags = {
+          Name        = "My bucket"
+          Environment = "Dev"
+        }
+      }
